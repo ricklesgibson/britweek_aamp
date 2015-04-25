@@ -1,14 +1,26 @@
-<p id="notice"><%= notice %></p>
+<%- model_class = Exercise -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => Exercise %></h1>
+</div>
 
-<p>
-  <strong>Title:</strong>
-  <%= @exercise.title %>
-</p>
+<div class="fieldset">
+  <dl>
+      <dt class="label label-default"><%= model_class.human_attribute_name(:title) %></dt>
+      <dd><pre class="prettyprint"><%= @exercise.title %></pre></dd>
+      <dt class="label label-default"><%= model_class.human_attribute_name(:instructions) %></dt>
+      <dd><pre class="prettyprint"><%= @exercise.instructions %></pre></dd>
+  </dl>
+</div>
 
-<p>
-  <strong>Instructions:</strong>
-  <%= @exercise.instructions %>
-</p>
+<div class="form-group">
+  <%= link_to t('.back', :default => t("helpers.links.back")),
+              exercises_path, :class => 'btn btn-default'  %>
+  <%= link_to t('.edit', :default => t("helpers.links.edit")),
+              edit_exercise_path(@exercise), :class => 'btn btn-default' %>
+  <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+              exercise_path(@exercise),
+              :method => 'delete',
+              :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+              :class => 'btn btn-danger' %>
+</div>
 
-<%= link_to 'Edit', edit_exercise_path(@exercise) %> |
-<%= link_to 'Back', exercises_path %>
