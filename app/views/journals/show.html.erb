@@ -1,19 +1,26 @@
-<p id="notice"><%= notice %></p>
+<%- model_class = Journal -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => Journal %></h1>
+</div>
 
-<p>
-  <strong>Subject:</strong>
-  <%= @journal.subject %>
-</p>
+<div class="fieldset">
+  <dl>
+      <dt class="label label-default"><%= model_class.human_attribute_name(:subject) %></dt>
+      <dd><pre class="prettyprint"><%= @journal.subject %></pre></dd>
+      <dt class="label label-default"><%= model_class.human_attribute_name(:entry) %></dt>
+      <dd><pre class="prettyprint"><%= @journal.entry %></pre></dd>
+  </dl>
+</div>
 
-<p>
-  <strong>Entry:</strong>
-  <%= @journal.entry %>
-</p>
+<div class="form-group">
+  <%= link_to t('.back', :default => t("helpers.links.back")),
+              journals_path, :class => 'btn btn-default'  %>
+  <%= link_to t('.edit', :default => t("helpers.links.edit")),
+              edit_journal_path(@journal), :class => 'btn btn-default' %>
+  <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+              journal_path(@journal),
+              :method => 'delete',
+              :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+              :class => 'btn btn-danger' %>
+</div>
 
-<p>
-  <strong>User:</strong>
-  <%= @journal.user %>
-</p>
-
-<%= link_to 'Edit', edit_journal_path(@journal) %> |
-<%= link_to 'Back', journals_path %>

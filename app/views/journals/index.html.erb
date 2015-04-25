@@ -1,29 +1,38 @@
-<h1>Listing journals</h1>
-
-<table>
+<%- model_class = Journal -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => Journal %></h1>
+</div>
+<table class="table table-striped">
   <thead>
     <tr>
-      <th>Subject</th>
-      <th>Entry</th>
-      <th>User</th>
-      <th colspan="3"></th>
+      <th>ID</th>
+      <th><%= model_class.human_attribute_name(:subject) %></th>
+      <th><%= model_class.human_attribute_name(:entry) %></th>
+      <th><%= model_class.human_attribute_name(:created_at) %></th>
+      <th><%=t '.actions', :default => t("helpers.actions") %></th>
     </tr>
   </thead>
-
   <tbody>
     <% @journals.each do |journal| %>
       <tr>
+        <td><%= journal.id %></td>
         <td><%= journal.subject %></td>
         <td><%= journal.entry %></td>
-        <td><%= journal.user %></td>
-        <td><%= link_to 'Show', journal %></td>
-        <td><%= link_to 'Edit', edit_journal_path(journal) %></td>
-        <td><%= link_to 'Destroy', journal, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%=l journal.created_at, format: :long %></td>
+        <td>
+          <%= link_to journal_path(journal), :class => 'btn btn-xs', :title => "#{ t('.show', :default => t('helpers.links.show')) }" do %>
+            <%= glyph 'info-sign' %>
+            <%= glyph 'pencil' %>
+          <%- end -%>
+          <%= link_to journal_path(journal), :method => :delete, :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-xs', :title => "#{ t('.destroy', :default => t('helpers.links.destroy')) }" do %>
+            <%= glyph 'remove' %>
+          <%- end -%>
+        </td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
-<br>
-
-<%= link_to 'New Journal', new_journal_path %>
+<%= link_to t('.new', :default => t("helpers.links.new")),
+            new_journal_path,
+            :class => 'btn btn-primary' %>
